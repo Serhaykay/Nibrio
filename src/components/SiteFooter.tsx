@@ -6,7 +6,7 @@ export default function SiteFooter() {
       <div className="mx-auto max-w-[1280px] px-6 py-12 lg:px-8">
         <div className="grid gap-10 md:grid-cols-4">
           <div>
-            <img src="/brand/nibrio-logo.png" alt="Nibrio" className="h-7 w-auto" width={112} height={28} />
+            <img src="/brand/nibrio-logo-dark.png" alt="Nibrio" className="h-7 w-auto" width={143} height={34} />
             <p className="mt-3 max-w-[28ch] text-sm leading-6 text-nibrio-charcoal/70">
               Commerce, thoughtfully built. Premium Shopify themes and practical tools for ambitious stores.
             </p>

@@ -24,11 +24,12 @@ export default function SiteHeader() {
       <div className="mx-auto flex h-[64px] max-w-[1280px] items-center justify-between gap-6 px-6 lg:px-8">
         <Link to="/" className="flex items-center gap-3" aria-label="Nibrio home">
           <img
-            src="/brand/nibrio-logo.png"
+            src={isHome ? "/brand/nibrio-logo-light.png" : "/brand/nibrio-logo-dark.png"}
             alt="Nibrio"
-            className={`h-7 w-auto object-contain ${isHome ? "brightness-0 invert" : ""}`}
-            width={112}
-            height={28}
+            className="h-7 w-auto object-contain"
+            width={143}
+            height={34}
+            decoding="async"
           />
         </Link>
 

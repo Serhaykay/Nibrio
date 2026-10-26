@@ -3,18 +3,21 @@
 @theme {
   --color-nibrio-teal: #102e32;
   --color-nibrio-teal-2: #143a3e;
+  --color-nibrio-teal-3: #0d2326;
   --color-nibrio-ivory: #f7f5ee;
   --color-nibrio-gold: #d8c49a;
   --color-nibrio-gold-2: #c9b48a;
   --color-nibrio-charcoal: #1f2937;
   --color-nibrio-sage: #a7b7aa;
   --color-nibrio-cream: #faf8f4;
+  --color-nibrio-stone: #e8e4dc;
   --font-mono: "IBM Plex Mono", monospace;
   --font-display: "Space Mono", monospace;
 }
 
 * {
   scrollbar-width: thin;
+  scrollbar-color: #d8c49a transparent;
 }
 
 html {
@@ -39,6 +42,8 @@ body {
   text-rendering: optimizeLegibility;
   background: #fff;
   color: #1f2937;
+  font-size: 15px;
+  line-height: 1.7;
 }
 
 :focus-visible {
@@ -49,4 +54,17 @@ body {
 ::selection {
   background: #d8c49a;
   color: #102e32;
+}
+
+/* Hairline divider with gold accent */
+.rule-gold {
+  height: 1px;
+  background: linear-gradient(90deg, #d8c49a 0 32px, rgba(0,0,0,0.08) 32px 100%);
+}
+
+/* Subtle paper texture for ivory sections */
+.paper {
+  background-image:
+    radial-gradient(ellipse 800px 400px at 20% 0%, rgba(216,196,154,0.08), transparent 60%),
+    radial-gradient(ellipse 600px 300px at 90% 100%, rgba(167,183,170,0.06), transparent 60%);
 }
