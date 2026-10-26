@@ -5,6 +5,7 @@ import SiteFooter from "./components/SiteFooter";
 import Home from "./routes/Home";
 import Products from "./routes/Products";
 import Orbis from "./routes/Orbis";
+import Services from "./routes/Services";
 import DocsHome from "./routes/DocsHome";
 import DocArticlePage from "./routes/DocArticlePage";
 import Support from "./routes/Support";
@@ -39,6 +40,7 @@ export default function App() {
           <Route path="/" element={<Home />} />
           <Route path="/products" element={<Products />} />
           <Route path="/products/orbis" element={<Orbis />} />
+          <Route path="/services" element={<Services />} />
           <Route path="/docs" element={<DocsHome />} />
           <Route path="/docs/orbis" element={<DocsHome />} />
           <Route path="/docs/:slug" element={<DocArticlePage />} />

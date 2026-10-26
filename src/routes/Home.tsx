@@ -1,21 +1,55 @@
 import { Link } from "react-router-dom";
-import { motion } from "framer-motion";
-import { ArrowUpRight, BookOpen, LifeBuoy, Wrench, Sparkles, ShieldCheck, Zap, HeartHandshake } from "lucide-react";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { Suspense, lazy, useRef } from "react";
+import {
+  ArrowUpRight,
+  BookOpen,
+  Boxes,
+  Bug,
+  Code2,
+  Layout,
+  LifeBuoy,
+  Palette,
+  Search,
+  Settings,
+  ShieldCheck,
+  Sparkles,
+  Wrench,
+  Zap,
+  HeartHandshake,
+} from "lucide-react";
 import Reveal from "../components/Reveal";
-import HeroArt from "../components/HeroArt";
+
+const Scene3D = lazy(() => import("../components/Scene3D"));
+
+const services = [
+  { icon: Palette, label: "Theme design", href: "/services" },
+  { icon: Layout, label: "Landing pages", href: "/services" },
+  { icon: Bug, label: "Bug fixes", href: "/services" },
+  { icon: Settings, label: "Theme setup", href: "/services" },
+  { icon: Search, label: "SEO", href: "/services" },
+  { icon: Zap, label: "Page speed", href: "/services" },
+  { icon: Code2, label: "Custom features", href: "/services" },
+  { icon: Boxes, label: "App dev", href: "/services" },
+];
 
 export default function Home() {
+  const heroRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({ target: heroRef, offset: ["start start", "end start"] });
+  const heroParallax = useTransform(scrollYProgress, [0, 1], [0, -80]);
+  const heroFade = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
+
   return (
     <div>
-      {/* HERO — deep field, type-led, washes only in hero */}
-      <section className="relative overflow-hidden bg-nibrio-teal">
+      {/* HERO — midnight field, pointer + scroll parallax, 3D */}
+      <section ref={heroRef} className="relative overflow-hidden bg-nibrio-teal">
         <div className="pointer-events-none absolute inset-0">
           <div className="absolute inset-0 bg-[radial-gradient(820px_520px_at_18%_12%,rgba(216,196,154,0.13),transparent_62%),radial-gradient(640px_420px_at_88%_78%,rgba(167,183,170,0.11),transparent_62%)]" />
           <div className="absolute inset-x-0 top-0 h-px bg-white/10" />
         </div>
 
-        <div className="relative mx-auto grid max-w-[1280px] gap-10 px-6 py-16 md:grid-cols-[1.05fr_0.95fr] md:items-center md:py-20 lg:px-8 lg:py-24">
-          <div>
+        <motion.div style={{ opacity: heroFade }} className="relative mx-auto grid max-w-[1280px] gap-8 px-6 py-12 md:grid-cols-[1.05fr_0.95fr] md:items-center md:py-16 lg:px-8 lg:py-20">
+          <motion.div style={{ y: heroParallax }}>
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
@@ -23,14 +57,14 @@ export default function Home() {
               className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.06] px-3.5 py-1 text-xs font-medium tracking-wide text-white/75 backdrop-blur"
             >
               <span className="h-1.5 w-1.5 rounded-full bg-nibrio-gold" />
-              A better foundation for commerce
+              Commerce, thoughtfully built
             </motion.div>
 
             <motion.h1
-              initial={{ opacity: 0, y: 12 }}
+              initial={{ opacity: 0, y: 14 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.08, duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
-              className="mt-6 font-display text-[36px] font-bold leading-[0.92] tracking-[-0.02em] text-white md:text-[54px] lg:text-[58px]"
+              transition={{ delay: 0.08, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+              className="mt-5 font-display text-[34px] font-bold leading-[0.92] tracking-[-0.02em] text-white md:text-[52px] lg:text-[58px]"
             >
               Beautifully built
               <br />
@@ -41,17 +75,36 @@ export default function Home() {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.16, duration: 0.6 }}
-              className="mt-5 max-w-[48ch] text-[15px] leading-7 text-white/65"
+              className="mt-4 max-w-[48ch] text-[15px] leading-7 text-white/65"
             >
-              Thoughtful Shopify themes and practical tools that help you create better shopping experiences — with less
-              friction and more room to grow.
+              Premium Shopify themes, hands-on storefront services, and practical commerce tools — from bug fixes and
+              speed to bespoke themes and app development.
             </motion.p>
+
+            {/* service chips — visible proof this isn't just a theme shop */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.28 }}
+              className="mt-5 flex flex-wrap gap-1.5"
+            >
+              {services.map((s) => (
+                <Link
+                  key={s.label}
+                  to={s.href}
+                  className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-medium text-white/70 backdrop-blur hover:bg-white/10 hover:text-white"
+                >
+                  <s.icon className="h-3 w-3" />
+                  {s.label}
+                </Link>
+              ))}
+            </motion.div>
 
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.24, duration: 0.6 }}
-              className="mt-8 flex flex-wrap items-center gap-3"
+              transition={{ delay: 0.32, duration: 0.6 }}
+              className="mt-7 flex flex-wrap items-center gap-3"
             >
               <Link
                 to="/products/orbis"
@@ -60,83 +113,177 @@ export default function Home() {
                 Explore Orbis <ArrowUpRight className="h-4 w-4" />
               </Link>
               <Link
-                to="/products"
+                to="/services"
                 className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-6 py-3 text-sm font-semibold text-white backdrop-blur hover:bg-white/10"
               >
-                Explore our products
+                View services
               </Link>
             </motion.div>
 
             <motion.p
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ delay: 0.42 }}
-              className="mt-4 font-mono text-xs tracking-wide text-white/45"
+              transition={{ delay: 0.45 }}
+              className="mt-3 font-mono text-xs tracking-wide text-white/45"
             >
-              Designed for merchants. Built with care.
+              Orbis available now · Services open for new projects
             </motion.p>
-          </div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.18, duration: 0.8 }}
-          >
-            <HeroArt />
           </motion.div>
-        </div>
+
+          {/* 3D — desktop, with CSS fallback on reduced-motion / mobile */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.98 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.18, duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
+            className="relative hidden md:block"
+          >
+            <Suspense
+              fallback={
+                <div className="h-[420px] rounded-[32px] border border-white/10 bg-white/5 p-6 backdrop-blur">
+                  <div className="h-full rounded-2xl bg-nibrio-ivory/90 p-5">
+                    <div className="h-3 w-20 rounded-full bg-black/10" />
+                    <div className="mt-4 grid grid-cols-3 gap-3">
+                      {[1, 2, 3].map((i) => (
+                        <div key={i} className="rounded-xl bg-white p-2 ring-1 ring-black/5">
+                          <div className="aspect-[4/3] rounded-lg bg-nibrio-teal/10" />
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              }
+            >
+              <Scene3D />
+            </Suspense>
+            {/* ambient ring */}
+            <div className="pointer-events-none absolute -inset-6 -z-10 rounded-[40px] border border-white/10" />
+          </motion.div>
+
+          {/* mobile fallback */}
+          <div className="rounded-[28px] border border-white/15 bg-white p-3 shadow-[0_24px_64px_rgba(0,0,0,0.3)] md:hidden">
+            <div className="rounded-xl bg-nibrio-ivory p-4">
+              <div className="h-4 w-20 rounded-full bg-nibrio-teal" />
+              <div className="mt-3 grid grid-cols-3 gap-2">
+                {[1, 2, 3].map((i) => (
+                  <div key={i} className="rounded-lg bg-white p-2 ring-1 ring-black/5">
+                    <div className="aspect-[4/3] rounded-md bg-nibrio-teal/10" />
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </motion.div>
+
+        {/* scroll indicator */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.9 }}
+          className="pointer-events-none absolute bottom-6 left-1/2 hidden -translate-x-1/2 flex-col items-center gap-2 md:flex"
+        >
+          <span className="font-mono text-[11px] tracking-[0.14em] text-white/30">Scroll</span>
+          <motion.span
+            animate={{ y: [0, 6, 0] }}
+            transition={{ repeat: Infinity, duration: 1.6, ease: "easeInOut" }}
+            className="h-8 w-px bg-white/20"
+          />
+        </motion.div>
       </section>
 
-      {/* INTRO — ivory, left-aligned, calm */}
+      {/* INTRO — company, not just Orbis */}
       <section className="paper bg-nibrio-ivory">
         <div className="mx-auto max-w-[1280px] px-6 py-16 lg:px-8 lg:py-20">
           <Reveal>
             <div className="max-w-3xl">
-              <div className="font-mono text-xs tracking-wide text-nibrio-teal/55">Not an agency</div>
+              <div className="font-mono text-xs tracking-wide text-nibrio-teal/55">A product company and a studio</div>
               <div className="rule-gold mt-3 max-w-[200px]" />
               <h2 className="mt-5 font-display text-3xl font-bold leading-[1.05] tracking-[-0.015em] text-nibrio-teal md:text-4xl">
                 Good commerce starts with good foundations.
               </h2>
               <p className="mt-4 max-w-[62ch] text-[15px] leading-7 text-nibrio-charcoal/65">
-                Nibrio is a product company. We design and build focused, high-quality software — thoughtful themes,
-                practical tools, and integrations — that help merchants create better stores without wrestling their
-                stack. Orbis is our first theme. More considered products will follow.
+                Nibrio ships premium Shopify themes — <strong className="font-semibold text-nibrio-teal">Orbis</strong> today, more on the way —
+                and we work directly with merchants on theme design, storefront fixes, and performance. Products where it makes
+                sense; hands-on help where you need it now.
               </p>
             </div>
           </Reveal>
 
-          {/* 3 features — distinct shapes, not identical cards */}
           <div className="mt-10 grid gap-4 md:grid-cols-3">
             <Reveal>
               <div className="rounded-[24px] border border-black/5 bg-white p-7">
                 <div className="h-1 w-8 rounded-full bg-nibrio-gold" />
                 <div className="mt-4 font-display text-lg font-bold tracking-tight text-nibrio-teal">Design with intent</div>
-                <p className="mt-2 text-sm leading-6 text-nibrio-charcoal/60">
-                  Editorial spacing, calm hierarchy, and tasteful defaults — so your products stay the hero.
-                </p>
+                <p className="mt-2 text-sm leading-6 text-nibrio-charcoal/60">Editorial spacing, calm hierarchy, and tasteful defaults — so your products stay the hero.</p>
               </div>
             </Reveal>
             <Reveal delay={0.06}>
               <div className="rounded-[24px] border border-black/5 bg-nibrio-teal p-7 text-white">
                 <div className="h-1 w-8 rounded-full bg-nibrio-gold" />
-                <div className="mt-4 font-display text-lg font-bold tracking-tight">Useful by default</div>
-                <p className="mt-2 text-sm leading-6 text-white/65">Built-in sections and sensible settings that solve real merchandising problems.</p>
+                <div className="mt-4 font-display text-lg font-bold tracking-tight">Build for real stores</div>
+                <p className="mt-2 text-sm leading-6 text-white/65">Themes, landing pages, speed, SEO, and custom features that ship in real shops.</p>
               </div>
             </Reveal>
             <Reveal delay={0.12}>
               <div className="rounded-[24px] border border-nibrio-stone bg-nibrio-ivory p-7">
                 <div className="h-1 w-8 rounded-full bg-nibrio-teal" />
                 <div className="mt-4 font-display text-lg font-bold tracking-tight text-nibrio-teal">Care in the details</div>
-                <p className="mt-2 text-sm leading-6 text-nibrio-charcoal/60">
-                  Fast, accessible, and maintainable — engineered to stay pleasant as your store grows.
-                </p>
+                <p className="mt-2 text-sm leading-6 text-nibrio-charcoal/60">Fast, accessible, maintainable — pleasant to run and to keep improving.</p>
               </div>
             </Reveal>
           </div>
         </div>
       </section>
 
-      {/* ORBIS — white, asymmetric */}
+      {/* SERVICES STRIP — makes the company scope obvious, not an afterthought */}
+      <section className="border-y border-black/5 bg-white">
+        <div className="mx-auto max-w-[1280px] px-6 py-12 lg:px-8 lg:py-14">
+          <div className="flex flex-wrap items-end justify-between gap-4">
+            <Reveal>
+              <h2 className="font-display text-2xl font-bold tracking-[-0.01em] text-nibrio-teal md:text-3xl">Services</h2>
+              <p className="mt-2 max-w-[62ch] text-sm leading-6 text-nibrio-charcoal/55">
+                Hands-on work alongside our products. Fixed scope, clear comms, tested on a duplicate theme before it goes live.
+              </p>
+            </Reveal>
+            <Link to="/services" className="hidden rounded-full border border-black/10 bg-white px-5 py-2.5 text-sm font-semibold text-nibrio-teal hover:bg-nibrio-ivory md:inline-flex">
+              All services
+            </Link>
+          </div>
+
+          <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {[
+              { icon: Palette, t: "Theme design", d: "Bespoke themes that feel like your brand." },
+              { icon: Layout, t: "Landing pages", d: "Launch and campaign pages that convert." },
+              { icon: Wrench, t: "Bug fixes", d: "Fast, careful fixes for real stores." },
+              { icon: Settings, t: "Theme setup", d: "Orbis and others set up properly." },
+              { icon: Search, t: "SEO", d: "Structured data and crawl health." },
+              { icon: Zap, t: "Page speed", d: "Measured gains, not hand-waving." },
+              { icon: Code2, t: "Custom features", d: "Logic your theme doesn't have yet." },
+              { icon: Boxes, t: "App development", d: "Private apps for your stack." },
+            ].map((c, i) => (
+              <Reveal key={c.t} delay={i * 0.03}>
+                <Link
+                  to="/services"
+                  className="group flex items-start gap-3 rounded-[18px] border border-black/5 bg-nibrio-ivory p-4 transition hover:-translate-y-0.5 hover:bg-white hover:shadow-[0_12px_32px_rgba(16,46,50,0.07)]"
+                >
+                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-white text-nibrio-teal ring-1 ring-black/5 group-hover:bg-nibrio-teal group-hover:text-white">
+                    <c.icon className="h-4.5 w-4.5" />
+                  </span>
+                  <span>
+                    <span className="block font-display text-sm font-bold tracking-tight text-nibrio-teal">{c.t}</span>
+                    <span className="block text-xs leading-5 text-nibrio-charcoal/60">{c.d}</span>
+                  </span>
+                </Link>
+              </Reveal>
+            ))}
+          </div>
+
+          <div className="mt-6 flex justify-center md:hidden">
+            <Link to="/services" className="rounded-full bg-nibrio-teal px-6 py-3 text-sm font-semibold text-white">View all services</Link>
+          </div>
+        </div>
+      </section>
+
+      {/* ORBIS — white, asymmetric, parallax preview */}
       <section className="bg-white">
         <div className="mx-auto max-w-[1280px] px-6 py-16 lg:px-8 lg:py-20">
           <div className="grid gap-10 md:grid-cols-[0.95fr_1.05fr] md:items-start">
@@ -145,17 +292,14 @@ export default function Home() {
                 <Sparkles className="h-3.5 w-3.5 text-nibrio-gold" /> Featured product
               </div>
               <h2 className="mt-4 font-display text-3xl font-bold tracking-[-0.015em] text-nibrio-teal md:text-4xl">Orbis</h2>
-              <p className="mt-2 font-mono text-xs tracking-wide text-nibrio-teal/50">
-                Available Shopify theme · Online Store 2.0
-              </p>
+              <p className="mt-2 font-mono text-xs tracking-wide text-nibrio-teal/50">Available Shopify theme · Online Store 2.0</p>
               <p className="mt-4 max-w-[54ch] text-[15px] leading-7 text-nibrio-charcoal/65">
-                A refined, flexible theme for modern commerce — clean product storytelling, composed collection layouts, and
-                calm, confident typography. Built for real stores, not just demos.
+                Our current flagship — a refined, flexible theme for modern commerce. Clean storytelling, composed collections, and calm typography. Built for real stores, not just demos.
               </p>
               <ul className="mt-6 grid gap-2.5 text-sm leading-6 text-nibrio-charcoal/65">
                 <li className="flex gap-3">
                   <span className="mt-2 h-px w-6 shrink-0 bg-nibrio-gold" />
-                  Sections and blocks for the Home, Product, and Collection templates
+                  Sections and blocks for Home, Product, and Collection
                 </li>
                 <li className="flex gap-3">
                   <span className="mt-2 h-px w-6 shrink-0 bg-nibrio-gold" />
@@ -163,14 +307,11 @@ export default function Home() {
                 </li>
                 <li className="flex gap-3">
                   <span className="mt-2 h-px w-6 shrink-0 bg-nibrio-gold" />
-                  Product media, variant selectors, and collection filtering via Shopify
+                  Product media, variants, and filtering via Shopify
                 </li>
               </ul>
               <div className="mt-8 flex flex-wrap gap-3">
-                <Link
-                  to="/products/orbis"
-                  className="rounded-full bg-nibrio-teal px-6 py-3 text-sm font-semibold text-white hover:bg-nibrio-teal-2"
-                >
+                <Link to="/products/orbis" className="rounded-full bg-nibrio-teal px-6 py-3 text-sm font-semibold text-white hover:bg-nibrio-teal-2">
                   Explore Orbis
                 </Link>
                 <Link
@@ -195,9 +336,7 @@ export default function Home() {
                     <div className="rounded-xl bg-nibrio-teal p-5 text-white">
                       <div className="font-display text-base font-bold leading-tight tracking-tight">New season, considered.</div>
                       <p className="mt-2 text-xs leading-5 text-white/60">A calm editorial hero for your latest collection.</p>
-                      <span className="mt-4 inline-flex rounded-full bg-white px-3 py-1.5 text-xs font-semibold text-nibrio-teal">
-                        Shop collection
-                      </span>
+                      <span className="mt-4 inline-flex rounded-full bg-white px-3 py-1.5 text-xs font-semibold text-nibrio-teal">Shop collection</span>
                     </div>
                     <div className="grid grid-cols-2 gap-3">
                       {[1, 2, 3, 4].map((i) => (
@@ -210,21 +349,19 @@ export default function Home() {
                     </div>
                   </div>
                 </div>
-                <p className="mt-3 text-center font-mono text-xs text-black/35">
-                  Representative preview. Final screenshots replace placeholders when supplied.
-                </p>
+                <p className="mt-3 text-center font-mono text-xs text-black/35">Representative preview. Final screenshots replace placeholders when supplied.</p>
               </div>
             </Reveal>
           </div>
         </div>
       </section>
 
-      {/* PHILOSOPHY — ivory, varied cards */}
+      {/* PHILOSOPHY */}
       <section className="bg-nibrio-ivory">
         <div className="mx-auto max-w-[1280px] px-6 py-16 lg:px-8 lg:py-20">
           <Reveal>
             <h2 className="font-display text-2xl font-bold tracking-[-0.01em] text-nibrio-teal md:text-3xl">How we build</h2>
-            <p className="mt-2 max-w-[56ch] text-sm leading-6 text-nibrio-charcoal/55">Four principles that shape every Nibrio product.</p>
+            <p className="mt-2 max-w-[56ch] text-sm leading-6 text-nibrio-charcoal/55">Four principles that shape every product and every project.</p>
             <div className="rule-gold mt-4 max-w-[120px]" />
           </Reveal>
 
@@ -235,7 +372,7 @@ export default function Home() {
               { icon: Zap, title: "Performance-minded", text: "Lean, accessible, and fast by default. No autoplay, no bloat, no layout jank." },
               { icon: HeartHandshake, title: "Merchant-friendly", text: "Clear docs, honest guidance, and help that actually helps." },
             ].map((c, i) => (
-              <Reveal key={c.title} delay={i * 0.06}>
+              <Reveal key={c.title} delay={i * 0.05}>
                 <div
                   className={`rounded-[22px] border p-6 transition hover:-translate-y-1 ${
                     i === 1
@@ -255,55 +392,20 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ECOSYSTEM — white, one teal hero + three quiet */}
-      <section className="bg-white">
-        <div className="mx-auto max-w-[1280px] px-6 py-16 lg:px-8 lg:py-20">
-          <Reveal>
-            <h2 className="font-display text-2xl font-bold tracking-[-0.01em] text-nibrio-teal md:text-3xl">Product ecosystem</h2>
-            <p className="mt-2 max-w-[60ch] text-sm leading-6 text-nibrio-charcoal/55">
-              Orbis is available today. Everything else is in progress — clearly labelled, no fake launches.
-            </p>
-          </Reveal>
-
-          <div className="mt-8 grid gap-4 md:grid-cols-4">
-            <div className="rounded-[22px] border border-nibrio-teal/15 bg-nibrio-teal p-6 text-white">
-              <span className="inline-flex rounded-full bg-nibrio-gold px-2.5 py-1 font-mono text-xs font-bold tracking-wide text-nibrio-teal">Available</span>
-              <div className="mt-3 font-display text-lg font-bold tracking-tight">Orbis</div>
-              <p className="mt-2 text-sm leading-6 text-white/65">Shopify theme — Online Store 2.0. Our current flagship.</p>
-              <Link to="/products/orbis" className="mt-4 inline-flex text-sm font-semibold text-nibrio-gold underline decoration-nibrio-gold/30 underline-offset-4 hover:text-white">
-                Explore Orbis
-              </Link>
-            </div>
-            {[
-              { label: "Planned", title: "Future themes", text: "Additional themes are on the roadmap. Details when they are real." },
-              { label: "Coming later", title: "Extensions & apps", text: "Practical tools and integrations to extend your store — when ready." },
-              { label: "In development", title: "Nibrio Labs", text: "Experimental work and early explorations. Not yet products." },
-            ].map((c) => (
-              <div key={c.title} className="rounded-[22px] border border-black/5 bg-nibrio-ivory p-6">
-                <span className="inline-flex rounded-full border border-black/10 bg-white px-2.5 py-1 font-mono text-xs font-semibold text-nibrio-charcoal/55">{c.label}</span>
-                <div className="mt-3 font-display text-base font-bold tracking-tight text-nibrio-teal">{c.title}</div>
-                <p className="mt-2 text-sm leading-6 text-nibrio-charcoal/60">{c.text}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* THEME PREVIEW — teal band, asymmetric overlapping frames */}
+      {/* THEME PREVIEW — teal band */}
       <section className="overflow-hidden bg-nibrio-teal">
         <div className="mx-auto max-w-[1280px] px-6 py-16 lg:px-8 lg:py-20">
           <div className="grid gap-10 md:grid-cols-2 md:items-center">
             <Reveal>
               <h2 className="font-display text-3xl font-bold tracking-[-0.015em] text-white md:text-4xl">See Orbis in context</h2>
               <p className="mt-3 max-w-[50ch] text-sm leading-7 text-white/60">
-                Desktop, tablet, and mobile — one calm system that adapts without losing its character. Explore the
-                product page for screenshots, features, and setup guidance.
+                Desktop, tablet, and mobile — one calm system that adapts without losing its character. Explore the product page for screenshots and setup.
               </p>
-              <Link
-                to="/products/orbis"
-                className="mt-6 inline-flex rounded-full bg-white px-6 py-3 text-sm font-semibold text-nibrio-teal hover:bg-nibrio-ivory"
-              >
+              <Link to="/products/orbis" className="mt-6 inline-flex rounded-full bg-white px-6 py-3 text-sm font-semibold text-nibrio-teal hover:bg-nibrio-ivory">
                 Open Orbis preview
+              </Link>
+              <Link to="/services" className="ml-3 inline-flex rounded-full border border-white/20 bg-white/5 px-6 py-3 text-sm font-semibold text-white hover:bg-white/10">
+                Need it customized?
               </Link>
             </Reveal>
 
@@ -326,7 +428,6 @@ export default function Home() {
                   <div className="rounded-xl bg-nibrio-ivory p-3">
                     <div className="h-1.5 w-16 rounded-full bg-black/10" />
                     <div className="mt-3 aspect-[3/4] rounded-lg bg-white ring-1 ring-black/5" />
-                    <div className="mt-2 h-1.5 w-2/3 rounded-full bg-black/8" />
                   </div>
                 </div>
               </div>
@@ -335,18 +436,18 @@ export default function Home() {
         </div>
       </section>
 
-      {/* HELP — ivory, paper texture */}
+      {/* HELP */}
       <section className="paper bg-nibrio-ivory">
         <div className="mx-auto max-w-[1280px] px-6 py-16 lg:px-8 lg:py-20">
           <Reveal>
             <h2 className="font-display text-2xl font-bold tracking-[-0.01em] text-nibrio-teal md:text-3xl">Need a hand getting started?</h2>
             <p className="mt-2 max-w-[64ch] text-sm leading-6 text-nibrio-charcoal/60">
-              Find Orbis setup instructions, explore theme features, troubleshoot common issues, or contact our support team.
+              Setup guides, troubleshooting, or a direct line to the team — pick the right door.
             </p>
           </Reveal>
           <div className="mt-8 grid gap-4 md:grid-cols-3">
             {[
-              { icon: BookOpen, title: "Orbis documentation", desc: "Step-by-step setup guides and feature references.", to: "/docs/orbis" },
+              { icon: BookOpen, title: "Orbis documentation", desc: "Step-by-step setup and feature references.", to: "/docs/orbis" },
               { icon: Wrench, title: "Troubleshooting", desc: "Solutions to common problems and gotchas.", to: "/docs" },
               { icon: LifeBuoy, title: "Contact support", desc: "Get help from the Nibrio team.", to: "/support" },
             ].map((c) => (
@@ -367,21 +468,21 @@ export default function Home() {
         </div>
       </section>
 
-      {/* CLOSING — teal, restrained */}
+      {/* CLOSING */}
       <section className="relative overflow-hidden bg-nibrio-teal">
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(700px_500px_at_70%_30%,rgba(216,196,154,0.12),transparent_62%)]" />
         <div className="relative mx-auto max-w-[1280px] px-6 py-16 text-center lg:px-8 lg:py-20">
           <Reveal>
             <h2 className="font-display text-3xl font-bold tracking-[-0.015em] text-white md:text-4xl">Your next store starts here.</h2>
-            <p className="mx-auto mt-3 max-w-[50ch] text-sm leading-6 text-white/60">
-              Orbis is ready when you are — a calm, capable foundation for the store you actually want to run.
-            </p>
-            <Link
-              to="/products/orbis"
-              className="mt-8 inline-flex items-center gap-2 rounded-full bg-nibrio-gold px-7 py-3.5 text-sm font-semibold tracking-tight text-nibrio-teal hover:bg-nibrio-gold-2"
-            >
-              Explore Orbis <ShieldCheck className="h-4 w-4" />
-            </Link>
+            <p className="mx-auto mt-3 max-w-[50ch] text-sm leading-6 text-white/60">Orbis today, more themes ahead — and hands-on help whenever you need it.</p>
+            <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
+              <Link to="/products/orbis" className="inline-flex items-center gap-2 rounded-full bg-nibrio-gold px-7 py-3.5 text-sm font-semibold tracking-tight text-nibrio-teal hover:bg-nibrio-gold-2">
+                Explore Orbis <ShieldCheck className="h-4 w-4" />
+              </Link>
+              <Link to="/services" className="inline-flex rounded-full border border-white/20 bg-white/5 px-7 py-3.5 text-sm font-semibold text-white hover:bg-white/10">
+                View services
+              </Link>
+            </div>
           </Reveal>
         </div>
       </section>
