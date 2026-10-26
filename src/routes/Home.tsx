@@ -18,38 +18,39 @@ import {
   Zap,
   HeartHandshake,
 } from "lucide-react";
-import Reveal from "../components/Reveal";
+import { Reveal, ParallaxReveal } from "../components/Reveal";
+import HeroArt from "../components/HeroArt";
 
-const Scene3D = lazy(() => import("../components/Scene3D"));
+const SectionBg3D = lazy(() => import("../components/SectionBg3D"));
 
 const services = [
-  { icon: Palette, label: "Theme design", href: "/services" },
-  { icon: Layout, label: "Landing pages", href: "/services" },
-  { icon: Bug, label: "Bug fixes", href: "/services" },
-  { icon: Settings, label: "Theme setup", href: "/services" },
-  { icon: Search, label: "SEO", href: "/services" },
-  { icon: Zap, label: "Page speed", href: "/services" },
-  { icon: Code2, label: "Custom features", href: "/services" },
-  { icon: Boxes, label: "App dev", href: "/services" },
+  { icon: Palette, label: "Theme design" },
+  { icon: Layout, label: "Landing pages" },
+  { icon: Bug, label: "Bug fixes" },
+  { icon: Settings, label: "Theme setup" },
+  { icon: Search, label: "SEO" },
+  { icon: Zap, label: "Page speed" },
+  { icon: Code2, label: "Custom features" },
+  { icon: Boxes, label: "App dev" },
 ];
 
 export default function Home() {
   const heroRef = useRef<HTMLElement>(null);
-  const { scrollYProgress } = useScroll({ target: heroRef, offset: ["start start", "end start"] });
-  const heroParallax = useTransform(scrollYProgress, [0, 1], [0, -80]);
-  const heroFade = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
+  const { scrollYProgress: heroProgress } = useScroll({ target: heroRef, offset: ["start start", "end start"] });
+  const heroY = useTransform(heroProgress, [0, 1], [0, -60]);
+  const heroOpacity = useTransform(heroProgress, [0, 0.65], [1, 0]);
 
   return (
     <div>
-      {/* HERO — midnight field, pointer + scroll parallax, 3D */}
+      {/* HERO — former HeroArt banner restored, with scroll parallax */}
       <section ref={heroRef} className="relative overflow-hidden bg-nibrio-teal">
         <div className="pointer-events-none absolute inset-0">
           <div className="absolute inset-0 bg-[radial-gradient(820px_520px_at_18%_12%,rgba(216,196,154,0.13),transparent_62%),radial-gradient(640px_420px_at_88%_78%,rgba(167,183,170,0.11),transparent_62%)]" />
           <div className="absolute inset-x-0 top-0 h-px bg-white/10" />
         </div>
 
-        <motion.div style={{ opacity: heroFade }} className="relative mx-auto grid max-w-[1280px] gap-8 px-6 py-12 md:grid-cols-[1.05fr_0.95fr] md:items-center md:py-16 lg:px-8 lg:py-20">
-          <motion.div style={{ y: heroParallax }}>
+        <motion.div style={{ opacity: heroOpacity }} className="relative mx-auto grid max-w-[1280px] gap-10 px-6 py-16 md:grid-cols-[1.05fr_0.95fr] md:items-center md:py-20 lg:px-8 lg:py-24">
+          <motion.div style={{ y: heroY }}>
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
@@ -57,14 +58,14 @@ export default function Home() {
               className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.06] px-3.5 py-1 text-xs font-medium tracking-wide text-white/75 backdrop-blur"
             >
               <span className="h-1.5 w-1.5 rounded-full bg-nibrio-gold" />
-              Commerce, thoughtfully built
+              A better foundation for commerce
             </motion.div>
 
             <motion.h1
-              initial={{ opacity: 0, y: 14 }}
+              initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.08, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-              className="mt-5 font-display text-[34px] font-bold leading-[0.92] tracking-[-0.02em] text-white md:text-[52px] lg:text-[58px]"
+              transition={{ delay: 0.08, duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
+              className="mt-6 font-display text-[36px] font-bold leading-[0.92] tracking-[-0.02em] text-white md:text-[54px] lg:text-[58px]"
             >
               Beautifully built
               <br />
@@ -75,28 +76,26 @@ export default function Home() {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.16, duration: 0.6 }}
-              className="mt-4 max-w-[48ch] text-[15px] leading-7 text-white/65"
+              className="mt-5 max-w-[48ch] text-[15px] leading-7 text-white/65"
             >
               Premium Shopify themes, hands-on storefront services, and practical commerce tools — from bug fixes and
               speed to bespoke themes and app development.
             </motion.p>
 
-            {/* service chips — visible proof this isn't just a theme shop */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ delay: 0.28 }}
+              transition={{ delay: 0.26 }}
               className="mt-5 flex flex-wrap gap-1.5"
             >
               {services.map((s) => (
-                <Link
+                <span
                   key={s.label}
-                  to={s.href}
-                  className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-medium text-white/70 backdrop-blur hover:bg-white/10 hover:text-white"
+                  className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-medium text-white/60"
                 >
                   <s.icon className="h-3 w-3" />
                   {s.label}
-                </Link>
+                </span>
               ))}
             </motion.div>
 
@@ -123,76 +122,33 @@ export default function Home() {
             <motion.p
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ delay: 0.45 }}
+              transition={{ delay: 0.44 }}
               className="mt-3 font-mono text-xs tracking-wide text-white/45"
             >
               Orbis available now · Services open for new projects
             </motion.p>
           </motion.div>
 
-          {/* 3D — desktop, with CSS fallback on reduced-motion / mobile */}
+          {/* FORMER HEROART — preferred banner, with scroll parallax */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.98 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.18, duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
-            className="relative hidden md:block"
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.18, duration: 0.8 }}
+            className="relative"
           >
-            <Suspense
-              fallback={
-                <div className="h-[420px] rounded-[32px] border border-white/10 bg-white/5 p-6 backdrop-blur">
-                  <div className="h-full rounded-2xl bg-nibrio-ivory/90 p-5">
-                    <div className="h-3 w-20 rounded-full bg-black/10" />
-                    <div className="mt-4 grid grid-cols-3 gap-3">
-                      {[1, 2, 3].map((i) => (
-                        <div key={i} className="rounded-xl bg-white p-2 ring-1 ring-black/5">
-                          <div className="aspect-[4/3] rounded-lg bg-nibrio-teal/10" />
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              }
-            >
-              <Scene3D />
-            </Suspense>
-            {/* ambient ring */}
-            <div className="pointer-events-none absolute -inset-6 -z-10 rounded-[40px] border border-white/10" />
+            <ParallaxReveal y={18}>
+              <HeroArt />
+            </ParallaxReveal>
           </motion.div>
-
-          {/* mobile fallback */}
-          <div className="rounded-[28px] border border-white/15 bg-white p-3 shadow-[0_24px_64px_rgba(0,0,0,0.3)] md:hidden">
-            <div className="rounded-xl bg-nibrio-ivory p-4">
-              <div className="h-4 w-20 rounded-full bg-nibrio-teal" />
-              <div className="mt-3 grid grid-cols-3 gap-2">
-                {[1, 2, 3].map((i) => (
-                  <div key={i} className="rounded-lg bg-white p-2 ring-1 ring-black/5">
-                    <div className="aspect-[4/3] rounded-md bg-nibrio-teal/10" />
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </motion.div>
-
-        {/* scroll indicator */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.9 }}
-          className="pointer-events-none absolute bottom-6 left-1/2 hidden -translate-x-1/2 flex-col items-center gap-2 md:flex"
-        >
-          <span className="font-mono text-[11px] tracking-[0.14em] text-white/30">Scroll</span>
-          <motion.span
-            animate={{ y: [0, 6, 0] }}
-            transition={{ repeat: Infinity, duration: 1.6, ease: "easeInOut" }}
-            className="h-8 w-px bg-white/20"
-          />
         </motion.div>
       </section>
 
-      {/* INTRO — company, not just Orbis */}
-      <section className="paper bg-nibrio-ivory">
-        <div className="mx-auto max-w-[1280px] px-6 py-16 lg:px-8 lg:py-20">
+      {/* INTRO — 3D background, scroll reveals */}
+      <section className="relative overflow-hidden bg-nibrio-ivory">
+        <Suspense fallback={null}>
+          <SectionBg3D variant="ivory" />
+        </Suspense>
+        <div className="relative mx-auto max-w-[1280px] px-6 py-16 lg:px-8 lg:py-20">
           <Reveal>
             <div className="max-w-3xl">
               <div className="font-mono text-xs tracking-wide text-nibrio-teal/55">A product company and a studio</div>
@@ -209,34 +165,31 @@ export default function Home() {
           </Reveal>
 
           <div className="mt-10 grid gap-4 md:grid-cols-3">
-            <Reveal>
-              <div className="rounded-[24px] border border-black/5 bg-white p-7">
-                <div className="h-1 w-8 rounded-full bg-nibrio-gold" />
-                <div className="mt-4 font-display text-lg font-bold tracking-tight text-nibrio-teal">Design with intent</div>
-                <p className="mt-2 text-sm leading-6 text-nibrio-charcoal/60">Editorial spacing, calm hierarchy, and tasteful defaults — so your products stay the hero.</p>
-              </div>
-            </Reveal>
-            <Reveal delay={0.06}>
-              <div className="rounded-[24px] border border-black/5 bg-nibrio-teal p-7 text-white">
-                <div className="h-1 w-8 rounded-full bg-nibrio-gold" />
-                <div className="mt-4 font-display text-lg font-bold tracking-tight">Build for real stores</div>
-                <p className="mt-2 text-sm leading-6 text-white/65">Themes, landing pages, speed, SEO, and custom features that ship in real shops.</p>
-              </div>
-            </Reveal>
-            <Reveal delay={0.12}>
-              <div className="rounded-[24px] border border-nibrio-stone bg-nibrio-ivory p-7">
-                <div className="h-1 w-8 rounded-full bg-nibrio-teal" />
-                <div className="mt-4 font-display text-lg font-bold tracking-tight text-nibrio-teal">Care in the details</div>
-                <p className="mt-2 text-sm leading-6 text-nibrio-charcoal/60">Fast, accessible, maintainable — pleasant to run and to keep improving.</p>
-              </div>
-            </Reveal>
+            {[
+              { title: "Design with intent", desc: "Editorial spacing, calm hierarchy, and tasteful defaults — so your products stay the hero.", accent: "bg-nibrio-gold" },
+              { title: "Build for real stores", desc: "Themes, landing pages, speed, SEO, and custom features that ship in real shops.", accent: "bg-nibrio-gold", dark: true },
+              { title: "Care in the details", desc: "Fast, accessible, maintainable — pleasant to run and to keep improving.", accent: "bg-nibrio-teal" },
+            ].map((c, i) => (
+              <ParallaxReveal key={c.title} y={16 + i * 6}>
+                <div
+                  className={`rounded-[24px] border p-7 ${c.dark ? "border-nibrio-teal bg-nibrio-teal text-white" : c.accent === "bg-nibrio-teal" ? "border-nibrio-stone bg-nibrio-ivory" : "border-black/5 bg-white"}`}
+                >
+                  <div className={`h-1 w-8 rounded-full ${c.accent}`} />
+                  <div className={`mt-4 font-display text-lg font-bold tracking-tight ${c.dark ? "text-white" : "text-nibrio-teal"}`}>{c.title}</div>
+                  <p className={`mt-2 text-sm leading-6 ${c.dark ? "text-white/65" : "text-nibrio-charcoal/60"}`}>{c.desc}</p>
+                </div>
+              </ParallaxReveal>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* SERVICES STRIP — makes the company scope obvious, not an afterthought */}
-      <section className="border-y border-black/5 bg-white">
-        <div className="mx-auto max-w-[1280px] px-6 py-12 lg:px-8 lg:py-14">
+      {/* SERVICES — white, scroll stagger */}
+      <section className="relative overflow-hidden border-y border-black/5 bg-white">
+        <Suspense fallback={null}>
+          <SectionBg3D variant="white" />
+        </Suspense>
+        <div className="relative mx-auto max-w-[1280px] px-6 py-12 lg:px-8 lg:py-14">
           <div className="flex flex-wrap items-end justify-between gap-4">
             <Reveal>
               <h2 className="font-display text-2xl font-bold tracking-[-0.01em] text-nibrio-teal md:text-3xl">Services</h2>
@@ -260,34 +213,39 @@ export default function Home() {
               { icon: Code2, t: "Custom features", d: "Logic your theme doesn't have yet." },
               { icon: Boxes, t: "App development", d: "Private apps for your stack." },
             ].map((c, i) => (
-              <Reveal key={c.t} delay={i * 0.03}>
+              <ParallaxReveal key={c.t} y={12 + (i % 3) * 5}>
                 <Link
                   to="/services"
                   className="group flex items-start gap-3 rounded-[18px] border border-black/5 bg-nibrio-ivory p-4 transition hover:-translate-y-0.5 hover:bg-white hover:shadow-[0_12px_32px_rgba(16,46,50,0.07)]"
                 >
                   <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-white text-nibrio-teal ring-1 ring-black/5 group-hover:bg-nibrio-teal group-hover:text-white">
-                    <c.icon className="h-4.5 w-4.5" />
+                    <c.icon className="h-4 w-4" />
                   </span>
                   <span>
                     <span className="block font-display text-sm font-bold tracking-tight text-nibrio-teal">{c.t}</span>
                     <span className="block text-xs leading-5 text-nibrio-charcoal/60">{c.d}</span>
                   </span>
                 </Link>
-              </Reveal>
+              </ParallaxReveal>
             ))}
           </div>
 
           <div className="mt-6 flex justify-center md:hidden">
-            <Link to="/services" className="rounded-full bg-nibrio-teal px-6 py-3 text-sm font-semibold text-white">View all services</Link>
+            <Link to="/services" className="rounded-full bg-nibrio-teal px-6 py-3 text-sm font-semibold text-white">
+              View all services
+            </Link>
           </div>
         </div>
       </section>
 
-      {/* ORBIS — white, asymmetric, parallax preview */}
-      <section className="bg-white">
-        <div className="mx-auto max-w-[1280px] px-6 py-16 lg:px-8 lg:py-20">
+      {/* ORBIS — 3D band */}
+      <section className="relative overflow-hidden bg-white">
+        <Suspense fallback={null}>
+          <SectionBg3D variant="white" />
+        </Suspense>
+        <div className="relative mx-auto max-w-[1280px] px-6 py-16 lg:px-8 lg:py-20">
           <div className="grid gap-10 md:grid-cols-[0.95fr_1.05fr] md:items-start">
-            <Reveal>
+            <ParallaxReveal y={18}>
               <div className="inline-flex items-center gap-2 rounded-full bg-nibrio-teal px-3 py-1.5 text-xs font-semibold tracking-wide text-white">
                 <Sparkles className="h-3.5 w-3.5 text-nibrio-gold" /> Featured product
               </div>
@@ -314,16 +272,13 @@ export default function Home() {
                 <Link to="/products/orbis" className="rounded-full bg-nibrio-teal px-6 py-3 text-sm font-semibold text-white hover:bg-nibrio-teal-2">
                   Explore Orbis
                 </Link>
-                <Link
-                  to="/docs/orbis"
-                  className="rounded-full border border-black/10 bg-white px-6 py-3 text-sm font-semibold text-nibrio-teal hover:bg-nibrio-ivory"
-                >
+                <Link to="/docs/orbis" className="rounded-full border border-black/10 bg-white px-6 py-3 text-sm font-semibold text-nibrio-teal hover:bg-nibrio-ivory">
                   Orbis docs
                 </Link>
               </div>
-            </Reveal>
+            </ParallaxReveal>
 
-            <Reveal delay={0.08}>
+            <ParallaxReveal y={-10}>
               <div className="rounded-[28px] border border-black/5 bg-nibrio-ivory p-4 md:p-5">
                 <div className="overflow-hidden rounded-2xl border border-black/5 bg-white">
                   <div className="flex items-center gap-1.5 border-b border-black/5 bg-nibrio-ivory px-4 py-3">
@@ -351,18 +306,21 @@ export default function Home() {
                 </div>
                 <p className="mt-3 text-center font-mono text-xs text-black/35">Representative preview. Final screenshots replace placeholders when supplied.</p>
               </div>
-            </Reveal>
+            </ParallaxReveal>
           </div>
         </div>
       </section>
 
-      {/* PHILOSOPHY */}
-      <section className="bg-nibrio-ivory">
-        <div className="mx-auto max-w-[1280px] px-6 py-16 lg:px-8 lg:py-20">
+      {/* PHILOSOPHY — dark 3D */}
+      <section className="relative overflow-hidden bg-nibrio-teal">
+        <Suspense fallback={null}>
+          <SectionBg3D variant="dark" />
+        </Suspense>
+        <div className="relative mx-auto max-w-[1280px] px-6 py-16 lg:px-8 lg:py-20">
           <Reveal>
-            <h2 className="font-display text-2xl font-bold tracking-[-0.01em] text-nibrio-teal md:text-3xl">How we build</h2>
-            <p className="mt-2 max-w-[56ch] text-sm leading-6 text-nibrio-charcoal/55">Four principles that shape every product and every project.</p>
-            <div className="rule-gold mt-4 max-w-[120px]" />
+            <h2 className="font-display text-2xl font-bold tracking-[-0.01em] text-white md:text-3xl">How we build</h2>
+            <p className="mt-2 max-w-[56ch] text-sm leading-6 text-white/55">Four principles that shape every product and every project.</p>
+            <div className="mt-4 h-px max-w-[120px] bg-nibrio-gold/60" />
           </Reveal>
 
           <div className="mt-8 grid gap-4 md:grid-cols-4">
@@ -372,44 +330,43 @@ export default function Home() {
               { icon: Zap, title: "Performance-minded", text: "Lean, accessible, and fast by default. No autoplay, no bloat, no layout jank." },
               { icon: HeartHandshake, title: "Merchant-friendly", text: "Clear docs, honest guidance, and help that actually helps." },
             ].map((c, i) => (
-              <Reveal key={c.title} delay={i * 0.05}>
-                <div
-                  className={`rounded-[22px] border p-6 transition hover:-translate-y-1 ${
-                    i === 1
-                      ? "border-nibrio-teal bg-nibrio-teal text-white hover:shadow-[0_16px_40px_rgba(16,46,50,0.18)]"
-                      : "border-black/5 bg-white hover:shadow-[0_16px_40px_rgba(16,46,50,0.07)]"
-                  }`}
-                >
-                  <span className={`flex h-10 w-10 items-center justify-center rounded-full ${i === 1 ? "bg-white text-nibrio-teal" : "bg-nibrio-ivory text-nibrio-teal ring-1 ring-black/5"}`}>
+              <ParallaxReveal key={c.title} y={14 + i * 4}>
+                <div className="rounded-[22px] border border-white/10 bg-white/5 p-6 backdrop-blur transition hover:bg-white/10">
+                  <span className="flex h-10 w-10 items-center justify-center rounded-full bg-white text-nibrio-teal">
                     <c.icon className="h-5 w-5" />
                   </span>
-                  <div className={`mt-4 font-display text-base font-bold tracking-tight ${i === 1 ? "text-white" : "text-nibrio-teal"}`}>{c.title}</div>
-                  <p className={`mt-2 text-sm leading-6 ${i === 1 ? "text-white/65" : "text-nibrio-charcoal/60"}`}>{c.text}</p>
+                  <div className="mt-4 font-display text-base font-bold tracking-tight text-white">{c.title}</div>
+                  <p className="mt-2 text-sm leading-6 text-white/60">{c.text}</p>
                 </div>
-              </Reveal>
+              </ParallaxReveal>
             ))}
           </div>
         </div>
       </section>
 
-      {/* THEME PREVIEW — teal band */}
-      <section className="overflow-hidden bg-nibrio-teal">
-        <div className="mx-auto max-w-[1280px] px-6 py-16 lg:px-8 lg:py-20">
+      {/* THEME PREVIEW — teal band with 3D depth */}
+      <section className="relative overflow-hidden bg-nibrio-teal">
+        <Suspense fallback={null}>
+          <SectionBg3D variant="dark" />
+        </Suspense>
+        <div className="relative mx-auto max-w-[1280px] px-6 py-16 lg:px-8 lg:py-20">
           <div className="grid gap-10 md:grid-cols-2 md:items-center">
-            <Reveal>
+            <ParallaxReveal y={12}>
               <h2 className="font-display text-3xl font-bold tracking-[-0.015em] text-white md:text-4xl">See Orbis in context</h2>
               <p className="mt-3 max-w-[50ch] text-sm leading-7 text-white/60">
                 Desktop, tablet, and mobile — one calm system that adapts without losing its character. Explore the product page for screenshots and setup.
               </p>
-              <Link to="/products/orbis" className="mt-6 inline-flex rounded-full bg-white px-6 py-3 text-sm font-semibold text-nibrio-teal hover:bg-nibrio-ivory">
-                Open Orbis preview
-              </Link>
-              <Link to="/services" className="ml-3 inline-flex rounded-full border border-white/20 bg-white/5 px-6 py-3 text-sm font-semibold text-white hover:bg-white/10">
-                Need it customized?
-              </Link>
-            </Reveal>
+              <div className="mt-6 flex flex-wrap gap-3">
+                <Link to="/products/orbis" className="inline-flex rounded-full bg-white px-6 py-3 text-sm font-semibold text-nibrio-teal hover:bg-nibrio-ivory">
+                  Open Orbis preview
+                </Link>
+                <Link to="/services" className="inline-flex rounded-full border border-white/20 bg-white/5 px-6 py-3 text-sm font-semibold text-white hover:bg-white/10">
+                  Need it customized?
+                </Link>
+              </div>
+            </ParallaxReveal>
 
-            <Reveal delay={0.08}>
+            <ParallaxReveal y={-12}>
               <div className="relative">
                 <div className="rounded-[24px] border border-white/15 bg-white p-3 shadow-[0_32px_80px_rgba(0,0,0,0.38)] md:p-4">
                   <div className="rounded-xl bg-nibrio-ivory p-4">
@@ -431,38 +388,40 @@ export default function Home() {
                   </div>
                 </div>
               </div>
-            </Reveal>
+            </ParallaxReveal>
           </div>
         </div>
       </section>
 
-      {/* HELP */}
-      <section className="paper bg-nibrio-ivory">
-        <div className="mx-auto max-w-[1280px] px-6 py-16 lg:px-8 lg:py-20">
+      {/* HELP — ivory with 3D haze */}
+      <section className="relative overflow-hidden bg-nibrio-ivory">
+        <Suspense fallback={null}>
+          <SectionBg3D variant="ivory" />
+        </Suspense>
+        <div className="relative mx-auto max-w-[1280px] px-6 py-16 lg:px-8 lg:py-20">
           <Reveal>
             <h2 className="font-display text-2xl font-bold tracking-[-0.01em] text-nibrio-teal md:text-3xl">Need a hand getting started?</h2>
-            <p className="mt-2 max-w-[64ch] text-sm leading-6 text-nibrio-charcoal/60">
-              Setup guides, troubleshooting, or a direct line to the team — pick the right door.
-            </p>
+            <p className="mt-2 max-w-[64ch] text-sm leading-6 text-nibrio-charcoal/60">Setup guides, troubleshooting, or a direct line to the team — pick the right door.</p>
           </Reveal>
           <div className="mt-8 grid gap-4 md:grid-cols-3">
             {[
               { icon: BookOpen, title: "Orbis documentation", desc: "Step-by-step setup and feature references.", to: "/docs/orbis" },
               { icon: Wrench, title: "Troubleshooting", desc: "Solutions to common problems and gotchas.", to: "/docs" },
               { icon: LifeBuoy, title: "Contact support", desc: "Get help from the Nibrio team.", to: "/support" },
-            ].map((c) => (
-              <Link
-                key={c.title}
-                to={c.to}
-                className="group rounded-[22px] border border-black/5 bg-white p-6 transition hover:-translate-y-1 hover:shadow-[0_16px_40px_rgba(16,46,50,0.08)]"
-              >
-                <span className="flex h-10 w-10 items-center justify-center rounded-full bg-nibrio-ivory text-nibrio-teal ring-1 ring-black/5">
-                  <c.icon className="h-5 w-5" />
-                </span>
-                <div className="mt-4 font-display text-base font-bold tracking-tight text-nibrio-teal group-hover:text-nibrio-teal-2">{c.title}</div>
-                <p className="mt-2 text-sm leading-6 text-nibrio-charcoal/60">{c.desc}</p>
-                <span className="mt-4 inline-flex font-mono text-xs font-semibold tracking-wide text-nibrio-teal">Open</span>
-              </Link>
+            ].map((c, i) => (
+              <ParallaxReveal key={c.title} y={10 + i * 4}>
+                <Link
+                  to={c.to}
+                  className="group flex h-full flex-col rounded-[22px] border border-black/5 bg-white p-6 transition hover:-translate-y-1 hover:shadow-[0_16px_40px_rgba(16,46,50,0.08)]"
+                >
+                  <span className="flex h-10 w-10 items-center justify-center rounded-full bg-nibrio-ivory text-nibrio-teal ring-1 ring-black/5">
+                    <c.icon className="h-5 w-5" />
+                  </span>
+                  <div className="mt-4 font-display text-base font-bold tracking-tight text-nibrio-teal group-hover:text-nibrio-teal-2">{c.title}</div>
+                  <p className="mt-2 text-sm leading-6 text-nibrio-charcoal/60">{c.desc}</p>
+                  <span className="mt-4 inline-flex font-mono text-xs font-semibold tracking-wide text-nibrio-teal">Open</span>
+                </Link>
+              </ParallaxReveal>
             ))}
           </div>
         </div>
@@ -470,9 +429,11 @@ export default function Home() {
 
       {/* CLOSING */}
       <section className="relative overflow-hidden bg-nibrio-teal">
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(700px_500px_at_70%_30%,rgba(216,196,154,0.12),transparent_62%)]" />
+        <Suspense fallback={null}>
+          <SectionBg3D variant="dark" />
+        </Suspense>
         <div className="relative mx-auto max-w-[1280px] px-6 py-16 text-center lg:px-8 lg:py-20">
-          <Reveal>
+          <ParallaxReveal y={16}>
             <h2 className="font-display text-3xl font-bold tracking-[-0.015em] text-white md:text-4xl">Your next store starts here.</h2>
             <p className="mx-auto mt-3 max-w-[50ch] text-sm leading-6 text-white/60">Orbis today, more themes ahead — and hands-on help whenever you need it.</p>
             <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
@@ -483,7 +444,7 @@ export default function Home() {
                 View services
               </Link>
             </div>
-          </Reveal>
+          </ParallaxReveal>
         </div>
       </section>
     </div>

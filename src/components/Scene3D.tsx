@@ -21,14 +21,12 @@ function Panels() {
 
   return (
     <>
-      {/* soft ambient */}
       <ambientLight intensity={0.9} />
       <directionalLight position={[4, 6, 5]} intensity={1.15} color="#FFF8E8" />
       <directionalLight position={[-4, 2, -3]} intensity={0.55} color="#A7B7AA" />
       <pointLight position={[0, 2, 3]} intensity={0.9} color="#D8C49A" distance={8} />
 
       <group ref={g1} position={[0.1, 0.18, 0]}>
-        {/* layered glass plates */}
         <Float speed={0.9} rotationIntensity={0.08} floatIntensity={0.22}>
           <mesh position={[0, 0, 0.22]}>
             <boxGeometry args={[2.65, 1.55, 0.06]} />
@@ -43,12 +41,10 @@ function Panels() {
           <boxGeometry args={[2.3, 1.25, 0.05]} />
           <meshPhysicalMaterial color="#102E32" transparent opacity={0.14} roughness={0.35} />
         </mesh>
-        {/* gold edge */}
         <mesh position={[1.02, 0.42, 0.32]}>
           <boxGeometry args={[0.42, 0.08, 0.02]} />
           <meshStandardMaterial color="#D8C49A" metalness={0.55} roughness={0.35} />
         </mesh>
-        {/* tiny storefront dots */}
         <mesh position={[-0.58, -0.18, 0.38]}>
           <sphereGeometry args={[0.07, 16, 16]} />
           <meshStandardMaterial color="#102E32" />
@@ -59,7 +55,6 @@ function Panels() {
         </mesh>
       </group>
 
-      {/* floating secondary chip */}
       <group ref={g2} position={[1.05, -0.62, 0.6]}>
         <Float speed={1.15} rotationIntensity={0.12} floatIntensity={0.35}>
           <mesh>
@@ -73,7 +68,6 @@ function Panels() {
         </Float>
       </group>
 
-      {/* ground haze */}
       <mesh position={[0, -1.08, -0.6]} rotation={[-Math.PI / 2, 0, 0]}>
         <planeGeometry args={[6, 3]} />
         <meshBasicMaterial color="#102E32" transparent opacity={0.55} />
@@ -85,7 +79,7 @@ function Panels() {
 export default function Scene3D() {
   return (
     <div className="h-[360px] w-full md:h-[420px] lg:h-[460px]">
-      <Canvas dpr={[1, 1.9]} gl={{ antialias: true, alpha: true }} style={{ background: "transparent" }}>
+      <Canvas dpr={[1, 1.6]} gl={{ antialias: true, alpha: true }} style={{ background: "transparent" }}>
         <PerspectiveCamera makeDefault position={[0.2, 0.35, 3.2]} fov={38} />
         <Panels />
         <fog attach="fog" args={["#102E32", 3.4, 7.5]} />
