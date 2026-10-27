@@ -12,7 +12,7 @@ export default function DocArticlePage() {
     return (
       <div className="mx-auto max-w-[1280px] px-6 py-16 lg:px-8">
         <h1 className="font-display text-2xl font-bold tracking-tight text-nibrio-teal">Article not found</h1>
-        <p className="mt-2 text-sm text-nibrio-charcoal/60">Try the documentation home or search.</p>
+        <p className="mt-2 text-sm leading-7 text-nibrio-charcoal/60">Try the documentation home or search.</p>
         <Link to="/docs" className="mt-6 inline-flex rounded-full bg-nibrio-teal px-5 py-2.5 text-sm font-semibold text-white">
           Back to docs
         </Link>
@@ -30,9 +30,9 @@ export default function DocArticlePage() {
   return (
     <div className="bg-white">
       <div className="mx-auto max-w-[1280px] px-6 lg:px-8">
-        <div className="grid gap-8 py-8 lg:grid-cols-[280px_1fr] lg:py-10">
+        <div className="grid gap-10 py-10 lg:grid-cols-[300px_1fr] lg:gap-12 lg:py-12">
           {/* Sidebar */}
-          <aside className="lg:sticky lg:top-[80px] lg:h-[calc(100vh-96px)] lg:overflow-auto">
+          <aside className="lg:sticky lg:top-[88px] lg:h-[calc(100vh-104px)] lg:overflow-auto lg:pr-2">
             <button
               type="button"
               onClick={() => setMobileNavOpen((v) => !v)}
@@ -45,14 +45,14 @@ export default function DocArticlePage() {
                 {categories.map((c) => {
                   const catArticles = articles.filter((a) => a.category === c.id);
                   return (
-                    <div key={c.id} className="mb-6">
-                      <div className="font-mono text-xs font-semibold uppercase tracking-[0.14em] text-nibrio-teal/55">{c.label}</div>
-                      <ul className="mt-2 grid gap-1">
+                    <div key={c.id} className="mb-7">
+                      <div className="font-mono text-xs font-semibold uppercase tracking-[0.14em] text-nibrio-teal/45">{c.label}</div>
+                      <ul className="mt-3 grid gap-1">
                         {catArticles.map((a) => (
                           <li key={a.slug}>
                             <Link
                               to={`/docs/${a.slug}`}
-                              className={`block rounded-xl px-3 py-2 text-sm leading-5 ${a.slug === article.slug ? "bg-nibrio-teal text-white" : "text-nibrio-charcoal/65 hover:bg-nibrio-ivory hover:text-nibrio-teal"}`}
+                              className={`block rounded-xl px-3 py-2 text-sm leading-6 ${a.slug === article.slug ? "bg-nibrio-teal text-white" : "text-nibrio-charcoal/60 hover:bg-nibrio-ivory hover:text-nibrio-teal"}`}
                             >
                               {a.title}
                             </Link>
@@ -66,9 +66,9 @@ export default function DocArticlePage() {
             </div>
           </aside>
 
-          {/* Article */}
+          {/* Article — wider measure, more leading, softer prose */}
           <article className="min-w-0">
-            <nav className="flex flex-wrap items-center gap-1.5 text-xs text-nibrio-charcoal/45" aria-label="Breadcrumb">
+            <nav className="flex flex-wrap items-center gap-1.5 text-xs tracking-wide text-nibrio-charcoal/40" aria-label="Breadcrumb">
               <Link to="/docs" className="hover:text-nibrio-teal">
                 Docs
               </Link>
@@ -80,9 +80,9 @@ export default function DocArticlePage() {
               <span className="text-nibrio-teal">{article.title}</span>
             </nav>
 
-            <h1 className="mt-4 font-display text-3xl font-bold leading-tight tracking-[-0.015em] text-nibrio-teal md:text-4xl">{article.title}</h1>
-            <p className="mt-3 max-w-[68ch] text-sm leading-7 text-nibrio-charcoal/60">{article.summary}</p>
-            <div className="mt-3 flex flex-wrap items-center gap-3 font-mono text-xs text-black/35">
+            <h1 className="mt-5 font-display text-3xl font-bold leading-tight tracking-[-0.015em] text-nibrio-teal md:text-[36px]">{article.title}</h1>
+            <p className="mt-4 max-w-[64ch] text-[15px] leading-8 text-nibrio-charcoal/60">{article.summary}</p>
+            <div className="mt-4 flex flex-wrap items-center gap-3 font-mono text-xs tracking-wide text-black/35">
               <span>{article.readingMinutes} min</span>
               <span>·</span>
               <span>Updated {article.updatedAt}</span>
@@ -91,12 +91,12 @@ export default function DocArticlePage() {
             </div>
 
             {toc.length > 0 && (
-              <div className="mt-6 rounded-[18px] border border-black/5 bg-nibrio-ivory p-4">
-                <div className="font-mono text-xs font-semibold tracking-wide text-nibrio-teal/55">On this page</div>
-                <ol className="mt-2 grid gap-1">
+              <div className="mt-8 rounded-[20px] border border-black/5 bg-nibrio-ivory p-5">
+                <div className="font-mono text-xs font-semibold tracking-wide text-nibrio-teal/50">On this page</div>
+                <ol className="mt-3 grid gap-2">
                   {toc.map((t) => (
                     <li key={t.i}>
-                      <a href={`#h-${t.i}`} className="text-sm text-nibrio-teal hover:underline">
+                      <a href={`#h-${t.i}`} className="text-sm leading-6 text-nibrio-teal hover:underline">
                         {t.text}
                       </a>
                     </li>
@@ -105,43 +105,47 @@ export default function DocArticlePage() {
               </div>
             )}
 
-            <div className="prose prose-sm mt-8 max-w-none prose-headings:font-display prose-headings:tracking-tight prose-headings:text-nibrio-teal prose-p:leading-7 prose-p:text-nibrio-charcoal/70 prose-li:text-nibrio-charcoal/70 prose-a:text-nibrio-teal prose-strong:text-nibrio-teal prose-table:text-sm">
+            <div className="prose prose-sm mt-10 max-w-none prose-headings:font-display prose-headings:tracking-tight prose-headings:text-nibrio-teal prose-h2:mt-10 prose-h2:text-xl prose-h3:mt-8 prose-h3:text-base prose-p:my-5 prose-p:text-[15px] prose-p:leading-8 prose-p:text-nibrio-charcoal/65 prose-li:text-[15px] prose-li:leading-7 prose-li:text-nibrio-charcoal/65 prose-a:text-nibrio-teal prose-strong:text-nibrio-teal prose-table:text-sm">
               {article.blocks.map((b, i) => {
                 if (b.type === "paragraph") return <p key={i}>{b.text}</p>;
                 if (b.type === "heading")
                   return b.level === 2 ? (
-                    <h2 key={i} id={`h-${i}`} className="scroll-mt-24">
+                    <h2 key={i} id={`h-${i}`} className="scroll-mt-28">
                       {b.text}
                     </h2>
                   ) : (
-                    <h3 key={i} id={`h-${i}`} className="scroll-mt-24">
+                    <h3 key={i} id={`h-${i}`} className="scroll-mt-28">
                       {b.text}
                     </h3>
                   );
                 if (b.type === "bullets")
                   return (
-                    <ul key={i} className="list-disc pl-5">
+                    <ul key={i} className="my-6 list-disc space-y-2 pl-5 marker:text-nibrio-gold">
                       {b.items.map((it, j) => (
-                        <li key={j}>{it}</li>
+                        <li key={j} className="pl-1">
+                          {it}
+                        </li>
                       ))}
                     </ul>
                   );
                 if (b.type === "steps")
                   return (
-                    <ol key={i} className="list-decimal pl-5">
+                    <ol key={i} className="my-6 list-decimal space-y-2 pl-5 marker:font-mono marker:text-xs marker:text-nibrio-teal">
                       {b.items.map((it, j) => (
-                        <li key={j}>{it}</li>
+                        <li key={j} className="pl-1">
+                          {it}
+                        </li>
                       ))}
                     </ol>
                   );
                 if (b.type === "table")
                   return (
-                    <div key={i} className="not-prose overflow-x-auto rounded-2xl border border-black/5">
+                    <div key={i} className="not-prose my-8 overflow-x-auto rounded-2xl border border-black/5">
                       <table className="w-full min-w-[520px] border-collapse text-sm">
                         <thead className="bg-nibrio-ivory text-left">
                           <tr>
                             {b.headers.map((h) => (
-                              <th key={h} className="px-4 py-3 font-semibold text-nibrio-teal">
+                              <th key={h} className="px-4 py-3.5 font-semibold tracking-tight text-nibrio-teal">
                                 {h}
                               </th>
                             ))}
@@ -151,7 +155,7 @@ export default function DocArticlePage() {
                           {b.rows.map((r, ri) => (
                             <tr key={ri} className="border-t border-black/5">
                               {r.map((cell, ci) => (
-                                <td key={ci} className="px-4 py-3 align-top leading-6 text-nibrio-charcoal/70">
+                                <td key={ci} className="px-4 py-3.5 align-top leading-7 text-nibrio-charcoal/70">
                                   {cell}
                                 </td>
                               ))}
@@ -170,7 +174,7 @@ export default function DocArticlePage() {
                         : "border-nibrio-teal/15 bg-nibrio-teal/[0.04] text-nibrio-teal";
                   const label = b.callout.kind === "warning" ? "Heads up" : b.callout.kind === "tip" ? "Tip" : "Note";
                   return (
-                    <div key={i} className={`not-prose rounded-2xl border p-4 text-sm leading-6 ${tone}`}>
+                    <div key={i} className={`not-prose my-7 rounded-2xl border p-5 text-sm leading-7 ${tone}`}>
                       <span className="font-semibold">{label} · </span>
                       {b.callout.text}
                     </div>
@@ -179,16 +183,16 @@ export default function DocArticlePage() {
                 if (b.type === "media") {
                   const isVideo = b.kind === "video";
                   return (
-                    <div key={i} className="not-prose">
+                    <div key={i} className="not-prose my-8">
                       <div
                         className="rounded-2xl border border-dashed border-black/15 bg-nibrio-ivory p-3"
                         style={{ aspectRatio: b.aspect ?? "16 / 9" } as React.CSSProperties}
                       >
                         <div className="flex h-full w-full items-center justify-center rounded-xl bg-white ring-1 ring-black/5">
-                          <span className="rounded-full bg-nibrio-teal px-3 py-1 text-xs font-semibold text-white">{isVideo ? "▶ Video" : "▣ Image"}</span>
+                          <span className="rounded-full bg-nibrio-teal px-3.5 py-1 text-xs font-semibold text-white">{isVideo ? "▶ Video" : "▣ Image"}</span>
                         </div>
                       </div>
-                      <p className="mt-2 text-center font-mono text-xs leading-5 text-black/40">{b.caption}</p>
+                      <p className="mt-3 text-center font-mono text-xs leading-6 text-black/40">{b.caption}</p>
                     </div>
                   );
                 }
@@ -197,26 +201,26 @@ export default function DocArticlePage() {
             </div>
 
             {related.length > 0 && (
-              <div className="mt-10 rounded-[20px] border border-black/5 bg-white p-6">
+              <div className="mt-12 rounded-[22px] border border-black/5 bg-white p-6">
                 <div className="font-display text-base font-bold tracking-tight text-nibrio-teal">Related articles</div>
-                <ul className="mt-3 grid gap-2">
+                <ul className="mt-4 grid gap-3">
                   {related.map((r) => (
-                    <li key={r.slug}>
-                      <Link to={`/docs/${r.slug}`} className="text-sm font-medium text-nibrio-teal hover:underline">
+                    <li key={r.slug} className="text-sm leading-6">
+                      <Link to={`/docs/${r.slug}`} className="font-medium text-nibrio-teal hover:underline">
                         {r.title}
                       </Link>
-                      <span className="text-sm text-nibrio-charcoal/40"> — {r.summary}</span>
+                      <span className="text-nibrio-charcoal/40"> — {r.summary}</span>
                     </li>
                   ))}
                 </ul>
               </div>
             )}
 
-            <div className="mt-8 flex flex-wrap gap-3 border-t border-black/5 pt-6">
+            <div className="mt-8 flex flex-wrap gap-3 border-t border-black/5 pt-8">
               {prev && (
                 <Link
                   to={`/docs/${prev.slug}`}
-                  className="rounded-full border border-black/10 bg-white px-4 py-2 text-sm font-medium text-nibrio-teal hover:bg-nibrio-ivory"
+                  className="rounded-full border border-black/10 bg-white px-5 py-2.5 text-sm font-medium text-nibrio-teal hover:bg-nibrio-ivory"
                 >
                   ← {prev.title}
                 </Link>
@@ -224,37 +228,37 @@ export default function DocArticlePage() {
               {next && (
                 <Link
                   to={`/docs/${next.slug}`}
-                  className="ml-auto rounded-full bg-nibrio-teal px-4 py-2 text-sm font-medium text-white hover:bg-nibrio-teal-2"
+                  className="ml-auto rounded-full bg-nibrio-teal px-5 py-2.5 text-sm font-medium text-white hover:bg-nibrio-teal-2"
                 >
                   {next.title} →
                 </Link>
               )}
             </div>
 
-            <div className="mt-8 rounded-[20px] border border-black/5 bg-nibrio-ivory p-6">
+            <div className="mt-8 rounded-[22px] border border-black/5 bg-nibrio-ivory p-6">
               <div className="text-sm font-semibold text-nibrio-teal">Was this helpful?</div>
               <div className="mt-3 flex gap-2">
                 <button
                   type="button"
                   onClick={() => setHelpful("yes")}
-                  className={`rounded-full px-4 py-2 text-sm font-semibold ring-1 ${helpful === "yes" ? "bg-nibrio-teal text-white ring-nibrio-teal" : "bg-white text-nibrio-teal ring-black/10"}`}
+                  className={`rounded-full px-5 py-2 text-sm font-semibold ring-1 ${helpful === "yes" ? "bg-nibrio-teal text-white ring-nibrio-teal" : "bg-white text-nibrio-teal ring-black/10"}`}
                 >
                   Yes
                 </button>
                 <button
                   type="button"
                   onClick={() => setHelpful("no")}
-                  className={`rounded-full px-4 py-2 text-sm font-semibold ring-1 ${helpful === "no" ? "bg-nibrio-teal text-white ring-nibrio-teal" : "bg-white text-nibrio-teal ring-black/10"}`}
+                  className={`rounded-full px-5 py-2 text-sm font-semibold ring-1 ${helpful === "no" ? "bg-nibrio-teal text-white ring-nibrio-teal" : "bg-white text-nibrio-teal ring-black/10"}`}
                 >
                   No
                 </button>
               </div>
-              {helpful && <p className="mt-2 text-sm text-nibrio-charcoal/60">Thanks for the feedback.</p>}
+              {helpful && <p className="mt-3 text-sm leading-6 text-nibrio-charcoal/60">Thanks for the feedback.</p>}
             </div>
 
-            <div className="mt-6 rounded-[20px] bg-nibrio-teal p-6 text-white">
-              <div className="font-display text-base font-bold">Still need help?</div>
-              <p className="mt-2 text-sm leading-6 text-white/70">Contact support and we will get back to you.</p>
+            <div className="mt-6 rounded-[22px] bg-nibrio-teal p-7 text-white">
+              <div className="font-display text-base font-bold leading-7">Still need help?</div>
+              <p className="mt-2 text-sm leading-7 text-white/70">Contact support and we will get back to you.</p>
               <Link to="/support" className="mt-4 inline-flex rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-nibrio-teal">
                 Contact support
               </Link>
