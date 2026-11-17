@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
-import { Search, ArrowRight, BookOpen, Rocket, Palette, Layout, ShoppingBag, ShoppingCart, FileText, Sliders, LifeBuoy } from "lucide-react";
+import { Search, ArrowRight, BookOpen, Rocket, Palette, Layout, ShoppingBag, ShoppingCart, FileText, Sliders, LifeBuoy, Wrench, Store } from "lucide-react";
 import { articles, categories, searchArticles } from "../lib/docs";
 import type { DocCategory } from "../lib/docs";
 
@@ -13,6 +13,9 @@ const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
   "file-text": FileText,
   sliders: Sliders,
   "life-buoy": LifeBuoy,
+  "book-open": BookOpen,
+  wrench: Wrench,
+  store: Store,
 };
 
 function CategoryIcon({ icon }: { icon: DocCategory["icon"] }) {
@@ -105,7 +108,7 @@ export default function DocsHome() {
         <div className="mt-12 grid gap-10 lg:grid-cols-[1.65fr_0.85fr]">
           <div>
             <h2 className="font-display text-xl font-bold tracking-tight text-nibrio-teal">Browse by topic</h2>
-            <p className="mt-2 text-sm leading-6 text-nibrio-charcoal/45">Nine topics from the guide — no extra categories invented.</p>
+            <p className="mt-2 text-sm leading-6 text-nibrio-charcoal/45">Twelve topics from the guide — no extra categories invented.</p>
             <div className="mt-8 grid gap-6">
               {categories.map((c) => {
                 const catArticles = articles.filter((a) => a.category === c.id);
@@ -147,7 +150,7 @@ export default function DocsHome() {
             <div className="rounded-[22px] border border-black/5 bg-white p-6">
               <h3 className="font-display text-sm font-bold tracking-tight text-nibrio-teal leading-6">On this page</h3>
               <p className="mt-3 text-sm leading-7 text-nibrio-charcoal/55">
-                Source: <em>Orbis Theme Setup and Section Guide.pdf</em> (14 pages, Oct 26). Content is faithful to
+                Source: <em>Orbis Theme Setup and Section Guide</em> (Oct 26). Content is faithful to
                 that guide — not invented.
               </p>
               <div className="mt-5 rounded-xl border border-dashed border-black/15 bg-nibrio-ivory p-4">

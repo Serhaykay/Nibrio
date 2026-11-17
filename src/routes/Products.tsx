@@ -22,12 +22,13 @@ export default function Products() {
                 <span className="inline-flex rounded-full bg-nibrio-teal px-3 py-1 text-xs font-bold tracking-wide text-white">Available</span>
                 <h2 className="mt-4 font-display text-2xl font-bold tracking-tight text-nibrio-teal">Orbis — Shopify theme</h2>
                 <p className="mt-2 text-sm leading-6 text-nibrio-charcoal/60">
-                  A refined Online Store 2.0 theme for modern commerce. Thoughtful defaults, flexible sections, and a calm
-                  editorial system that keeps your products front and centre.
+                  A premium Online Store 2.0 theme for eight niches — arts and crafts, baby and kids, health and beauty,
+                  home and decor, jewelry, outdoor and garden, pet supplies, and restaurants. One color system,
+                  focal-point cropping, bundles, pre-order, and 40+ sections — all in the editor, no code.
                 </p>
                 <div className="mt-6 grid grid-cols-2 gap-2 text-xs">
                   <span className="rounded-full bg-white px-3 py-2 text-center font-medium text-nibrio-teal ring-1 ring-black/5">Online Store 2.0</span>
-                  <span className="rounded-full bg-white px-3 py-2 text-center font-medium text-nibrio-teal ring-1 ring-black/5">OS 2.0 sections</span>
+                  <span className="rounded-full bg-white px-3 py-2 text-center font-medium text-nibrio-teal ring-1 ring-black/5">40+ sections</span>
                 </div>
                 <Link to="/products/orbis" className="mt-6 inline-flex rounded-full bg-nibrio-teal px-6 py-3 text-sm font-semibold text-white hover:bg-nibrio-teal-2">
                   Explore Orbis

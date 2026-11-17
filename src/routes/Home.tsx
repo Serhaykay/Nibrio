@@ -217,20 +217,20 @@ export default function Home() {
               <h2 className="mt-4 font-display text-3xl font-bold tracking-[-0.015em] text-nibrio-teal md:text-4xl">Orbis</h2>
               <p className="mt-2 font-mono text-xs tracking-wide text-nibrio-teal/50">Available Shopify theme · Online Store 2.0</p>
               <p className="mt-4 max-w-[54ch] text-[15px] leading-7 text-nibrio-charcoal/65">
-                Our current flagship — a refined, flexible theme for modern commerce. Clean storytelling, composed collections, and calm typography. Built for real stores, not just demos.
+                Our current flagship — a premium Online Store 2.0 theme for eight niches, from baby and kids to jewelry and restaurants. One color system, focal-point cropping, bundles and pre-order, 40+ sections — all editable with no code.
               </p>
               <ul className="mt-6 grid gap-2.5 text-sm leading-6 text-nibrio-charcoal/65">
                 <li className="flex gap-3">
                   <span className="mt-2 h-px w-6 shrink-0 bg-nibrio-gold" />
-                  Sections and blocks for Home, Product, and Collection
+                  40+ sections and blocks for home, product, collection, cart, blog and pages
                 </li>
                 <li className="flex gap-3">
                   <span className="mt-2 h-px w-6 shrink-0 bg-nibrio-gold" />
-                  Global colours, typography, and layout in Theme settings
+                  One color system — every section picks a scheme; text and buttons follow it
                 </li>
                 <li className="flex gap-3">
                   <span className="mt-2 h-px w-6 shrink-0 bg-nibrio-gold" />
-                  Product media, variants, and filtering via Shopify
+                  Galleries, swatches, pre-order, bundles, filters and focal-point cropping
                 </li>
               </ul>
               <div className="mt-8 flex flex-wrap gap-3">

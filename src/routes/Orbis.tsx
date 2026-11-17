@@ -22,9 +22,9 @@ export default function Orbis() {
               <h1 className="mt-4 font-display text-4xl font-bold tracking-tight text-white md:text-[44px]">Orbis</h1>
               <p className="mt-2 font-mono text-xs uppercase tracking-[0.14em] text-white/60">A calm foundation for the store you want to run.</p>
               <p className="mt-4 max-w-[52ch] text-sm leading-7 text-white/70">
-                Orbis is a refined Shopify theme for merchants who care about how their store feels — not just how it looks.
-                Editorial spacing, composed layouts, and sensible defaults so you can launch with confidence and keep
-                iterating without fighting your theme.
+                Orbis is a premium Shopify Online Store 2.0 theme for eight niches — arts and crafts, baby and kids,
+                health and beauty, home and decor, jewelry, outdoor and garden, pet supplies, and restaurants. Every page
+                is made of sections and blocks you add, reorder and style in the theme editor, with no code.
               </p>
               <div className="mt-6 flex flex-wrap gap-3">
                 <a
@@ -106,11 +106,11 @@ export default function Orbis() {
           </Reveal>
           <div className="grid gap-4">
             {[
-              "Sections & blocks on Home, Product, and Collection templates",
-              "Global colours, typography, and layout in Theme settings",
-              "Header with menu, logo, search, account, and cart",
-              "Product media, variant selectors, and collection filtering via Shopify",
-              "Accessible navigation and mobile drawer behaviour",
+              "40+ sections & blocks for home, product, collection, cart, blog and pages",
+              "One color system: every section picks a scheme; text and buttons follow it",
+              "Header with mega menu, slide-out cart, promo popup and full footer system",
+              "Galleries, swatches, pre-order, bundles, filters and focal-point cropping",
+              "RTL-ready layout, translation-ready text, and built-in speed options",
             ].map((t) => (
               <Reveal key={t}>
                 <div className="flex gap-3 rounded-2xl border border-black/5 bg-white p-4">
@@ -131,7 +131,7 @@ export default function Orbis() {
         <div className="mt-10 grid gap-6 border-t border-black/5 pt-10 md:grid-cols-3">
           <div className="rounded-[20px] border border-black/5 bg-white p-6">
             <div className="font-display text-base font-bold tracking-tight text-nibrio-teal">Compatibility</div>
-            <p className="mt-2 text-sm leading-6 text-nibrio-charcoal/60">Shopify Online Store 2.0. Requires a Shopify plan with theme access.</p>
+            <p className="mt-2 text-sm leading-6 text-nibrio-charcoal/60">Shopify Online Store 2.0. Works on any paid Shopify plan; checkout branding stays in Shopify's checkout settings.</p>
             <Link to="/docs/orbis" className="mt-3 inline-flex text-sm font-semibold text-nibrio-teal">Requirements →</Link>
           </div>
           <div className="rounded-[20px] border border-black/5 bg-white p-6">
